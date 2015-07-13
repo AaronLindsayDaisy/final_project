@@ -8,6 +8,10 @@ class ExperimentsController < ApplicationController
     @experiments = Experiment.by_votes
   end
 
+  def ages
+    @experiments = Experiment.order(:age)
+  end
+
   def mess_ratings
     @experiments = Experiment.order_by_mess
     # @experiments = experiments_by_mess.by_votes
@@ -45,6 +49,9 @@ class ExperimentsController < ApplicationController
   def create
     @experiment = Experiment.new(experiment_params)
     @experiment.user_id = current_user.id
+    # params[:concepts].each do |concept_id|
+    #   @experiment.concepts_experiment.new(concept_id: concept_id)
+    # end
     respond_to do |format|
       if @experiment.save
         format.html { redirect_to @experiment, notice: 'Experiment was successfully created.' }
